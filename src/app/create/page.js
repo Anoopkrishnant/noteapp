@@ -22,7 +22,7 @@ function CreateNoteContent() {
           setContent(existingNote.content);
         } else {
           setError("Note not found");
-          setTimeout(() => router.push("/"), 2000);
+          setTimeout(() => router.push("/home"), 2000);
         }
       } catch (error) {
         console.error("Error loading note:", error);
@@ -58,7 +58,7 @@ function CreateNoteContent() {
         localStorage.setItem("notes", JSON.stringify([...storedNotes, newNote]));
       }
 
-      router.push("/");
+      router.push("/home");
     } catch (error) {
       console.error("Error saving note:", error);
       setError("Error saving note");
