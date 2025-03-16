@@ -8,7 +8,6 @@ const Card = ({ id, title, time, items, bgColor, onUpdate, onDelete }) => {
   const router = useRouter();
 
   const handleEdit = () => {
-    // Use the correct storage key 'notes' instead of 'cards'
     const storedData = JSON.parse(localStorage.getItem("notes")) || [];
     const noteToEdit = storedData.find((note) => note.id === id);
 
