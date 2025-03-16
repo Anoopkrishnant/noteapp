@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import "./Create.css";
 
-export default function CreateNotePage() {
+function CreateNoteContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const noteId = searchParams?.get("id");
@@ -42,7 +42,6 @@ export default function CreateNotePage() {
       const currentTime = new Date().toLocaleTimeString();
 
       if (noteId) {
-        // Update existing note
         const updatedNotes = storedNotes.map((note) =>
           note.id === noteId
             ? { ...note, title, content, time: currentTime }
@@ -50,17 +49,13 @@ export default function CreateNotePage() {
         );
         localStorage.setItem("notes", JSON.stringify(updatedNotes));
       } else {
-        // Create new note
         const newNote = {
           id: Date.now().toString(),
           title,
           content,
           time: currentTime,
         };
-        localStorage.setItem(
-          "notes",
-          JSON.stringify([...storedNotes, newNote])
-        );
+        localStorage.setItem("notes", JSON.stringify([...storedNotes, newNote]));
       }
 
       router.push("/");
@@ -71,7 +66,7 @@ export default function CreateNotePage() {
   };
 
   return (
-    <div className="container" style={{maxWidth:"500px"}}>
+    <div className="container" style={{ maxWidth: "500px" }}>
       <h2>{noteId ? "Update Note" : "Create Note"}</h2>
       {error && <p className="error-message">{error}</p>}
       <input
@@ -89,5 +84,13 @@ export default function CreateNotePage() {
       />
       <button onClick={handleSave}>{noteId ? "Update Note" : "Save Note"}</button>
     </div>
+  );
+}
+
+export default function CreateNotePage() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <CreateNoteContent />
+    </Suspense>
   );
 }
