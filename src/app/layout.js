@@ -1,6 +1,7 @@
 
 import "./globals.css";
 import Header from "@/components/Header/header";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Noteapp",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }) {
       <body >
         <Header />
         <main>
+        <Toaster position="top-right" />
         {children}
         </main>
       </body>

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import "@/app/register/Register.css";
+import {toast} from "react-hot-toast";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -35,7 +36,7 @@ const RegisterPage = () => {
         throw new Error(data.error || "Something went wrong");
       }
 
-      setSuccess("Registration successful! Redirecting...");
+      toast.success("Registration successful!");
       setTimeout(() => {
         window.location.href = "/home";
       }, 2000);
